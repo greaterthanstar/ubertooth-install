@@ -6,21 +6,21 @@
 # by Raul Siles
 # Copyright (c) 2015 DinoSec SL (www.dinosec.com)
 #
-# Version: 2015-10-R1
+# Version: 2017-03-R2
 # Date: 2015-10-31
 #
-# Ubertooth and libbtbb versions: 2015-10-R1
+# Ubertooth and libbtbb versions: 2017-03-R2
 # Kali Linux version: 2.0.0
 # Wireshark version: 1.12.6
 # Kismet version: 2013-03-R1b
 #
 
 # Versions
-VERSION=2015-10-R1
+VERSION=2017-03-R2
 KALI_VERSION=2.0.0
-UBER_VERSION=2015-10-R1
+UBER_VERSION=2017-03-R2
 WIRESHARK_VERSION=1.12.6
-KISMET_VERSION=2013-03-R1b
+KISMET_VERSION=2016-07-R1
 
 LIBBTBB_URL=https://github.com/greatscottgadgets/libbtbb/archive/$UBER_VERSION.tar.gz
 LIBBTBB_FILENAME=libbtbb-$UBER_VERSION.tar.gz
@@ -75,7 +75,7 @@ read key
 
 echo "[*] Installing Ubertooth dependencies..."
 echo
-sudo apt-get -y install cmake libusb-1.0-0-dev make gcc g++ libbluetooth-dev \
+sudo apt-get install git cmake libusb-1.0-0-dev make gcc g++ libbluetooth-dev \
 pkg-config libpcap-dev python-numpy python-pyside python-qt4
 
 echo
@@ -126,34 +126,34 @@ echo "[*] Adding 'pcapbtbb' to the 'logtypes=...' line in kismet.conf..."
 # /usr/local/etc/kismet.conf <-- Used when manually compiled
 #
 sudo cp $KISMET_CONF_FILE $KISMET_CONF_FILE.previous
-sed -i 's/\(pcapdump,gpsxml,netxml,nettxt,alert\)/\1,pcapbtbb/g' $KISMET_CONF_FILE
+sed -i 's/\(pcapdump,gpsxml,netxml,nettxt,alert,string\)/\1,pcapbtbb/g' $KISMET_CONF_FILE
 #OR:
 #sed -i 's/logtypes=pcapdump/logtypes=pcapbtbb,pcpadump/g' $KISMET_CONF_FILE
 #
 
-echo
-echo "[*] Building the Ubertooth BTBB Wireshark plugin..."
-echo
-sudo apt-get -y install wireshark wireshark-dev libwireshark-dev cmake
-cd $LIBBTBB_DIR/wireshark/plugins/btbb
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_LIBDIR=$WIRESHARK_PLUGINS_DIR ..
-make
-sudo make install
-cd ../../../../..
+# echo
+# echo "[*] Building the Ubertooth BTBB Wireshark plugin..."
+# echo
+# sudo apt-get -y install wireshark wireshark-dev libwireshark-dev cmake
+# cd $LIBBTBB_DIR/wireshark/plugins/btbb
+# mkdir build
+# cd build
+# cmake -DCMAKE_INSTALL_LIBDIR=$WIRESHARK_PLUGINS_DIR ..
+# make
+# sudo make install
+# cd ../../../../..
 
-echo
-echo "[*] Building the Ubertooth BT BR/EDR Wireshark plugin..."
-echo
-sudo apt-get -y install wireshark wireshark-dev libwireshark-dev cmake
-cd $LIBBTBB_DIR/wireshark/plugins/btbredr
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_LIBDIR=$WIRESHARK_PLUGINS_DIR ..
-make
-sudo make install
-cd ../../../../..
+# echo
+# echo "[*] Building the Ubertooth BT BR/EDR Wireshark plugin..."
+# echo
+# sudo apt-get -y install wireshark wireshark-dev libwireshark-dev cmake
+# cd $LIBBTBB_DIR/wireshark/plugins/btbredr
+# mkdir build
+# cd build
+# cmake -DCMAKE_INSTALL_LIBDIR=$WIRESHARK_PLUGINS_DIR ..
+# make
+# sudo make install
+# cd ../../../../..
 
 
 echo
